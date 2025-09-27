@@ -1,7 +1,7 @@
 /* Estilo geral da página */
 body {
   font-family: Arial, sans-serif;
-  background-image: url('./imagem/GorilaFortaoAcademia.jpg'); /* imagem de fundo */
+  background-image: url('https://static1.sfd.pl/1/images2006/20060603202243.jpg'); /* imagem de fundo */
   background-repeat: no-repeat;  /* não repetir a imagem */
   background-position: center center; /* centralizar */
   background-size: cover; /* preencher a tela mantendo proporção */
