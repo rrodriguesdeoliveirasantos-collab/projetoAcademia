@@ -1,11 +1,15 @@
 /* Estilo geral da página */
 body {
   font-family: Arial, sans-serif;
-  background: #0a0c06 url(C:\REPOSITORIOS\projetoAcademia\assets\imagem\GorilaFortaonaAcademia.png) no-repeat center center fixed;
-  background-size: cover;
+  background-image: url(C:\REPOSITORIOS\projetoAcademia\assets\imagem\GorilaFortaonaAcademia.png); /* imagem de fundo */
+  background-repeat: no-repeat;  /* não repetir a imagem */
+  background-position: center center; /* centralizar */
+  background-size: cover; /* preencher a tela mantendo proporção */
+  background-attachment: fixed; /* fixa a imagem ao rolar a página */
   margin: 0;
   padding: 0;
 }
+
 
 .container {
   max-width: 700px;
