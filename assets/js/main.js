@@ -44,4 +44,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // baixa o arquivo
     doc.save("plano_treino.pdf");
   });
+
+  const exercicios = {
+  "Peito": [
+    { nome: "Supino Reto", nivel: "Iniciante" },
+    { nome: "Crucifixo", nivel: "Intermediário" },
+    { nome: "Supino Inclinado", nivel: "Avançado" }
+  ],
+  "Costas": [
+    { nome: "Puxada na Barra Fixa", nivel: "Intermediário" },
+    { nome: "Remada Curvada", nivel: "Avançado" }
+  ],
+  "Pernas": [
+    { nome: "Agachamento Livre", nivel: "Avançado" },
+    { nome: "Leg Press", nivel: "Iniciante" }
+  ],
+  "Bíceps": [
+    { nome: "Rosca Direta", nivel: "Iniciante" },
+    { nome: "Rosca Martelo", nivel: "Intermediário" }
+  ],
+  "Tríceps": [
+    { nome: "Tríceps testa", nivel: "Iniciante" },
+    { nome: "Tríceps corda", nivel: "Intermediário" }
+  ]
+  
+};
+
+
  });
