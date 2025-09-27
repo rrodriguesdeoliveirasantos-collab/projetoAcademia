@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return; // primeira pesquisa
     }
     //criar doc
-    const { jsPDF }  = window.jsPDF;
+    const { jsPDF }  = window.jspdf;
     const doc = new jsPDF ();
     let y = 10; //posiçao inicial
     
@@ -97,43 +97,6 @@ form.addEventListener('submit', e => {
     table.appendChild(tbody);
     planoDiv.appendChild(table);
   }
-});
-
-// Exportar PDF (reaproveitando o que já tínhamos)
-exportBtn.addEventListener('click', () => {
-  if (!planoDiv.innerHTML.trim()) {
-    alert('Nenhum plano para exportar.');
-    return;
-  }
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let y = 20;
-
-  doc.setFontSize(16);
-  doc.text("Plano de Treino", 10, y);
-  y += 10;
-
-  const grupos = planoDiv.querySelectorAll('h3');
-  grupos.forEach(grupo => {
-    doc.setFontSize(14);
-    doc.text(grupo.textContent, 10, y);
-    y += 8;
-
-    const rows = grupo.nextElementSibling.querySelectorAll('tr');
-    rows.forEach(row => {
-      const cols = row.querySelectorAll('td');
-      let textLine = "";
-      cols.forEach(col => textLine += col.innerText + " | ");
-      doc.setFontSize(11);
-      doc.text(textLine.trim(), 12, y);
-      y += 6;
-    });
-
-    y += 8;
-  });
-
-  doc.save("plano_treino.pdf");
 });
 
  });
