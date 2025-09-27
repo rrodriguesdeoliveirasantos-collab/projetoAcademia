@@ -1,3 +1,4 @@
+/* Estilo geral da página */
 body {
   font-family: Arial, sans-serif;
   background: #0a0c06 url(https://tse2.mm.bing.net/th/id/OIP.G2aPgO92Hy--TjZqUtmEowHaDL?rs=1&pid=ImgDetMain&o=7&rm=3) no-repeat center center fixed;
@@ -39,6 +40,7 @@ input, select, button {
   font-size: 14px;
 }
 
+/* Botões gerais */
 button {
   background: #020202;
   color: #f1f1f1;
@@ -51,25 +53,51 @@ button:hover {
   background: #c53939;
 }
 
+/* Área de botões de ação */
 .buttons {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-#plan h3 {
+/* Títulos dos dias no plano */
+#plano h3 {
   margin-top: 20px;
   color: #000000;
 }
 
+/* Botões de dias da semana */
+.dia-btn {
+  margin: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid #333;
+  background: #fff;
+  color: #000;
+  transition: 0.3s;
+}
+
+.dia-btn:hover {
+  background: #ddd;
+}
+
+.dia-btn.selecionado {
+  background: #4CAF50;
+  color: #fff;
+}
+
+/* Tabelas do plano */
 table {
-  width: 100%;
   border-collapse: collapse;
-  margin-bottom: 15px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
 }
 
 th, td {
-  border: 1px solid #c9c9c9;
-  padding: 8px;
+  padding: 5px;
   text-align: left;
 }

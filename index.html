@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planilha de Treino</title>
   <link rel="stylesheet" href="./assets/css/style.css" />
+
 </head>
 <body>
   <section class="container">
@@ -24,21 +25,30 @@
         <option value="avancado">Avançado</option>
       </select>
 
-      <label for="days">Dias por semana</label>
-      <input type="number" id="days" name="days" value="3" min="1" max="7" />
+      <label>Escolha os dias de treino:</label>
+      <div id="diasSemana">
+        <button type="button" class="dia-btn" data-dia="Segunda">Segunda</button>
+        <button type="button" class="dia-btn" data-dia="Terça">Terça</button>
+        <button type="button" class="dia-btn" data-dia="Quarta">Quarta</button>
+        <button type="button" class="dia-btn" data-dia="Quinta">Quinta</button>
+        <button type="button" class="dia-btn" data-dia="Sexta">Sexta</button>
+        <button type="button" class="dia-btn" data-dia="Sábado">Sábado</button>
+        <button type="button" class="dia-btn" data-dia="Domingo">Domingo</button>
+      </div>
 
-      <button type="submit">Gerar</button>
+      <button type="submit">Gerar Plano</button>
     </form>
 
     <div class="buttons">
-     <button id="saveBtn">Salvar Plano</button>
-     <button id="loadBtn">Carregar Último</button>
-     <button id="exportBtn">Exportar PDF</button>
+      <button id="saveBtn">Salvar Plano</button>
+      <button id="loadBtn">Carregar Último</button>
+      <button id="exportBtn">Exportar PDF</button>
     </div>
 
     <div id="plano" aria-live="polite"></div>
   </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="./assets/js/main.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="./assets/js/main.js"></script>
 </body>
 </html>

@@ -5,7 +5,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadBtn = document.getElementById('loadBtn');
   const exportBtn = document.getElementById('exportBtn');
 
-  // Banco de exercícios por grupo e nível (valores sem acento)
+  const botoesDias = document.querySelectorAll('.dia-btn');
+  const diasSelecionados = new Set();
+
+  // Botões de dias: selecionar/desmarcar
+  botoesDias.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dia = btn.dataset.dia;
+      if (diasSelecionados.has(dia)) {
+        diasSelecionados.delete(dia);
+        btn.classList.remove('selecionado');
+      } else {
+        diasSelecionados.add(dia);
+        btn.classList.add('selecionado');
+      }
+    });
+  });
+
+  // Banco de exercícios
   const exercicios = {
     "Peito": [
       { nome: "Supino Reto", nivel: "iniciante" },
@@ -30,23 +47,26 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  // Função para gerar o plano
+  // Gerar plano
   form.addEventListener('submit', e => {
     e.preventDefault();
     const nivelSelecionado = document.getElementById('level').value.toLowerCase();
-    const dias = parseInt(document.getElementById('days').value);
     planoDiv.innerHTML = ""; // limpa plano antigo
 
-    for (let d = 1; d <= dias; d++) {
+    if (diasSelecionados.size === 0) {
+      alert('Selecione ao menos um dia!');
+      return;
+    }
+
+    diasSelecionados.forEach(diaNome => {
       const diaTitulo = document.createElement('h3');
-      diaTitulo.textContent = `Dia ${d}`;
+      diaTitulo.textContent = diaNome;
       planoDiv.appendChild(diaTitulo);
 
       for (const grupo in exercicios) {
         const exFiltrados = exercicios[grupo].filter(
           ex => ex.nivel.toLowerCase() === nivelSelecionado
         );
-
         if (exFiltrados.length === 0) continue;
 
         const grupoTitulo = document.createElement('h4');
@@ -65,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         table.appendChild(tbody);
         planoDiv.appendChild(table);
       }
-    }
+    });
   });
 
   // Exportar PDF
@@ -110,20 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         next = next.nextElementSibling;
       }
-
-      y += 8; // espaço entre dias
+      y += 8;
     });
 
     doc.save("plano_treino.pdf");
   });
 
-  // Salvar plano no localStorage
+  // Salvar plano
   saveBtn.addEventListener('click', () => {
     localStorage.setItem('plano', planoDiv.innerHTML);
     alert('Plano salvo!');
   });
 
-  // Carregar plano do localStorage
+  // Carregar plano
   loadBtn.addEventListener('click', () => {
     const planoSalvo = localStorage.getItem('plano');
     if (planoSalvo) {
