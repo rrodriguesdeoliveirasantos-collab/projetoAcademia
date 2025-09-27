@@ -66,9 +66,74 @@ document.addEventListener('DOMContentLoaded', () => {
   "Tríceps": [
     { nome: "Tríceps testa", nivel: "Iniciante" },
     { nome: "Tríceps corda", nivel: "Intermediário" }
-  ]
-  
+  ] 
 };
 
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const nivel = document.getElementById('level').value;
+  planoDiv.innerHTML = ""; // limpa plano antigo
+
+  for (const grupo in exercicios) {
+    // Filtra por nível
+    const exFiltrados = exercicios[grupo].filter(ex => ex.nivel.toLowerCase() === nivel.toLowerCase());
+    if (exFiltrados.length === 0) continue;
+
+    // Cria título do grupo
+    const h3 = document.createElement('h3');
+    h3.textContent = grupo;
+    planoDiv.appendChild(h3);
+
+    // Cria tabela
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    exFiltrados.forEach(ex => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${ex.nome}</td><td>${ex.nivel}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    planoDiv.appendChild(table);
+  }
+});
+
+// Exportar PDF (reaproveitando o que já tínhamos)
+exportBtn.addEventListener('click', () => {
+  if (!planoDiv.innerHTML.trim()) {
+    alert('Nenhum plano para exportar.');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 20;
+
+  doc.setFontSize(16);
+  doc.text("Plano de Treino", 10, y);
+  y += 10;
+
+  const grupos = planoDiv.querySelectorAll('h3');
+  grupos.forEach(grupo => {
+    doc.setFontSize(14);
+    doc.text(grupo.textContent, 10, y);
+    y += 8;
+
+    const rows = grupo.nextElementSibling.querySelectorAll('tr');
+    rows.forEach(row => {
+      const cols = row.querySelectorAll('td');
+      let textLine = "";
+      cols.forEach(col => textLine += col.innerText + " | ");
+      doc.setFontSize(11);
+      doc.text(textLine.trim(), 12, y);
+      y += 6;
+    });
+
+    y += 8;
+  });
+
+  doc.save("plano_treino.pdf");
+});
 
  });
