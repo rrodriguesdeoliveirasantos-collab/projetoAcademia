@@ -11,18 +11,20 @@ document.addEventListener('DOMContentLoaded', () => {
       return; // primeira pesquisa
     }
     //criar doc
-    const { jsPDF }  = windows.jsPDF;
+    const { jsPDF }  = window.jsPDF;
     const doc = new jsPDF ();
+    let y = 10; //posiçao inicial
+    
     //captura o titulo e as tabelas
-    doc.setFrontSize(16);
+    doc.setFontSize(16);
     doc.text("Plano de Treino", 10, y);
     y += 10;
     //pega os dias
     const dias  = planoDiv.querySelectorAll("h3");
     dias.forEach((dia, index) => {
-      doc.setFrontSize(14);
-      doc.text(dia.textContent, 10 y);
-      y+= 8;
+      doc.setFontSize(14);
+      doc.text(dia.textContent, 10, y);
+      y += 8;
 
       const rows = dia.nextElementSibling.querySelectorAll("tr");
       rows.forEach((row, i) => {
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
           textLine += col.innerText + " | ";
         });
 
-        doc.setFrontSize(11);
+        doc.setFontSize(11);
         doc.text(textLine.trim(), 12, y);
         y += 6;
       });
@@ -42,3 +44,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // baixa o arquivo
     doc.save("plano_treino.pdf");
   });
+ });
