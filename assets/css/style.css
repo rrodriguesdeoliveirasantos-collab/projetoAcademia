@@ -1,7 +1,7 @@
 /* Estilo geral da página */
 body {
   font-family: Arial, sans-serif;
-  background-image: url('./imagem/GorilaForteAcademi.jpg'); /* imagem de fundo */
+  background-image: url('./imagem/GorilaForteAcademi.jpeg'); /* imagem de fundo */
   background-repeat: no-repeat;  /* não repetir a imagem */
   background-position: center center; /* centralizar */
   background-size: cover; /* preencher a tela mantendo proporção */
