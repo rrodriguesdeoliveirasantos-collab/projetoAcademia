@@ -22,71 +22,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Banco de exercícios
-  const exercicios = {
-    "Peito": [
-      { nome: "Supino Reto", nivel: "iniciante" },
-      { nome: "Crucifixo", nivel: "intermediario" },
-      { nome: "Supino Inclinado", nivel: "avancado" }
-    ],
-    "Costas": [
-      { nome: "Puxada na Barra Fixa", nivel: "intermediario" },
-      { nome: "Remada Curvada", nivel: "avancado" }
-    ],
-    "Pernas": [
-      { nome: "Agachamento Livre", nivel: "avancado" },
-      { nome: "Leg Press", nivel: "iniciante" }
-    ],
-    "Biceps": [
-      { nome: "Rosca Direta", nivel: "iniciante" },
-      { nome: "Rosca Martelo", nivel: "intermediario" }
-    ],
-    "Triceps": [
-      { nome: "Triceps Testa", nivel: "iniciante" },
-      { nome: "Triceps Corda", nivel: "intermediario" }
-    ]
-  };
+  // gwerador de exercícios
+  async function gerarPlanoIA(objetivo, nivel, dias) {
+
+  const response = await fetch("http://localhost:3000/gerar-treino", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ objetivo, nivel, dias })
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao gerar treino");
+  }
+
+  return await response.json();
+}
 
   // Gerar plano
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const nivelSelecionado = document.getElementById('level').value.toLowerCase();
-    planoDiv.innerHTML = ""; // limpa plano antigo
+ form.addEventListener('submit', async e => {
+  e.preventDefault();
 
-    if (diasSelecionados.size === 0) {
-      alert('Selecione ao menos um dia!');
-      return;
-    }
+  const objetivo = document.getElementById('objectivo').value;
+  const nivel = document.getElementById('level').value;
 
-    diasSelecionados.forEach(diaNome => {
+  if (diasSelecionados.size === 0) {
+    alert('Selecione ao menos um dia!');
+    return;
+  }
+
+  try {
+    const plano = await gerarPlanoIA(
+      objetivo,
+      nivel,
+      [...diasSelecionados]
+    );
+
+    planoDiv.innerHTML = "";
+
+    plano.treinos.forEach(treino => {
+
       const diaTitulo = document.createElement('h3');
-      diaTitulo.textContent = diaNome;
+      diaTitulo.textContent = treino.dia;
       planoDiv.appendChild(diaTitulo);
 
-      for (const grupo in exercicios) {
-        const exFiltrados = exercicios[grupo].filter(
-          ex => ex.nivel.toLowerCase() === nivelSelecionado
-        );
-        if (exFiltrados.length === 0) continue;
+      treino.exercicios.forEach(ex => {
 
-        const grupoTitulo = document.createElement('h4');
-        grupoTitulo.textContent = grupo;
-        planoDiv.appendChild(grupoTitulo);
+        const linha = document.createElement('p');
+        linha.textContent =
+          `${ex.nome} - ${ex.series} séries - ${ex.reps} - Desc: ${ex.descanso}`;
 
-        const table = document.createElement('table');
-        const tbody = document.createElement('tbody');
-
-        exFiltrados.forEach(ex => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${ex.nome}</td><td>${ex.nivel}</td>`;
-          tbody.appendChild(tr);
-        });
-
-        table.appendChild(tbody);
-        planoDiv.appendChild(table);
-      }
+        planoDiv.appendChild(linha);
+      });
     });
-  });
+
+  } catch (err) {
+    alert("Erro ao gerar treino com IA.");
+    console.error(err);
+  }
+});
 
   // Exportar PDF
   exportBtn.addEventListener('click', () => {
