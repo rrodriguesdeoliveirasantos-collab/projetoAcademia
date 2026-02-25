@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // gwerador de exercícios
+  // gerador de exercícios
   async function gerarPlanoIA(objetivo, nivel, dias) {
 
   const response = await fetch("http://localhost:3000/gerar-treino", {
